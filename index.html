@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Happy Birthday ♥ — a little film</title>
+  <meta name="description" content="A cinematic birthday film in four acts: a beating heart you open with a tap, a rush of colour, a kinetic wish, and a tree that blooms into a heart of petals." />
+  <meta name="theme-color" content="#f7e7dc" />
+  <link rel="icon" type="image/png" href="%BASE_URL%favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&display=swap" rel="stylesheet" />
+
+  <script>document.documentElement.classList.add('js');document.documentElement.style.setProperty('--grain-texture','url("%BASE_URL%textures/grain.png")')</script>
+  <link rel="stylesheet" href="./birthday.css" />
+</head>
+<body>
+  <section class="passcode-screen" id="passcodeScreen" aria-labelledby="passcodeTitle" aria-describedby="passcodeHint">
+    <div class="passcode-left" aria-hidden="true">
+      <div class="passcode-confetti passcode-confetti--one">✦</div>
+      <div class="passcode-confetti passcode-confetti--two">✧</div>
+      <div class="passcode-confetti passcode-confetti--three">✦</div>
+      <div class="passcode-art-frame">
+        <div class="passcode-art">
+          <span class="passcode-art__banner">A LITTLE BIRTHDAY FILM</span>
+          <svg class="passcode-cake" viewBox="0 0 180 155" role="presentation">
+            <path d="M90 12c-12 16 9 18-2 31" fill="none" stroke="#e4a653" stroke-width="5" stroke-linecap="round"/>
+            <path d="M88 17c-7 8 5 9 0 16" fill="none" stroke="#fff1b5" stroke-width="3" stroke-linecap="round"/>
+            <rect x="83" y="42" width="14" height="43" rx="5" fill="#fff7eb" stroke="#d2a8bb" stroke-width="2"/>
+            <path d="M30 76h120v54a12 12 0 0 1-12 12H42a12 12 0 0 1-12-12Z" fill="#eea8c8" stroke="#bd77a2" stroke-width="3"/>
+            <path d="M30 80c12-10 18 10 30 0s18 10 30 0 18 10 30 0 18 10 30 0v21H30Z" fill="#fff7f0" stroke="#e7c2d3" stroke-width="2"/>
+            <path d="M46 108v20m22-20v20m22-20v20m22-20v20m22-20v20" stroke="#fff0e8" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="90" cy="143" rx="75" ry="7" fill="#dfc9ec"/>
+            <path d="M35 52l4 7 8 1-6 5 2 8-8-4-7 4 2-8-6-5 8-1Zm103 4 3 5 6 1-4 4 1 6-6-3-5 3 1-6-4-4 6-1Z" fill="#e9bd50"/>
+          </svg>
+          <span class="passcode-art__caption">made with all my love <i>♥</i></span>
+        </div>
+      </div>
+      <p class="passcode-left__note">A little surprise, just for you</p>
+    </div>
+    <div class="passcode-right">
+      <div class="passcode-panel">
+        <p class="passcode-eyebrow">A birthday surprise for Amma</p>
+        <h1 id="passcodeTitle">Enter a passcode</h1>
+        <p class="passcode-hint" id="passcodeHint">Enter the 4-digit secret passcode <span aria-hidden="true">💌</span></p>
+        <div class="passcode-digits" id="passcodeDigits" aria-label="Passcode entry" aria-live="polite">
+          <span class="passcode-digit is-current" data-digit="0"></span>
+          <span class="passcode-digit" data-digit="1"></span>
+          <span class="passcode-digit" data-digit="2"></span>
+          <span class="passcode-digit" data-digit="3"></span>
+        </div>
+        <p class="passcode-error" id="passcodeError" role="alert" aria-live="assertive"></p>
+        <div class="passcode-keypad" id="passcodeKeypad" aria-label="Number keypad">
+          <button type="button" data-key="1" aria-label="1">1</button><button type="button" data-key="2" aria-label="2">2</button><button type="button" data-key="3" aria-label="3">3</button>
+          <button type="button" data-key="4" aria-label="4">4</button><button type="button" data-key="5" aria-label="5">5</button><button type="button" data-key="6" aria-label="6">6</button>
+          <button type="button" data-key="7" aria-label="7">7</button><button type="button" data-key="8" aria-label="8">8</button><button type="button" data-key="9" aria-label="9">9</button>
+          <button type="button" data-key="delete" aria-label="Delete last digit" class="passcode-key--utility"><span aria-hidden="true">⌫</span></button><button type="button" data-key="0" aria-label="0">0</button><button type="button" data-key="submit" aria-label="Unlock birthday surprise" class="passcode-key--unlock"><span aria-hidden="true">♥</span></button>
+        </div>
+        <p class="passcode-footnote">A tiny key to a whole lot of love</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="scene" id="birthdayExperience" aria-hidden="true" inert>
+
+    <!-- The tree world (Act 4). One canvas; it stays transparent until the
+         intro hands off, then it draws its own warm sky + blossom tree. -->
+    <canvas id="tree" class="tree" aria-label="A blossom tree grows and blooms into a heart made of petals" role="img"></canvas>
+
+    <!-- ACT 1 — THE INVITATION ------------------------------------------------
+         A single beating heart on a warm field. It is the only thing the
+         visitor has to do: tap it. Real <button> so it is tappable + keyboard
+         focusable; everything decorative around it is aria-hidden. -->
+    <section class="hero" id="hero" aria-label="Draw the bow to open your card">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__motes" id="motes" aria-hidden="true"></div>
+
+      <p class="hero__eyebrow" id="eyebrow">A little piece of my heart, just for you, Amma…</p>
+
+      <!-- THE TARGET — the heart the arrow flies to (GSAP animates .target) -->
+      <div class="targetWrap" aria-hidden="true">
+        <div class="target" id="target">
+          <span class="heart__glow" aria-hidden="true"></span>
+          <span class="target__heart" id="targetHeart">
+            <svg class="heart__svg" viewBox="0 0 100 92" aria-hidden="true">
+              <defs>
+                <radialGradient id="hg" cx="38%" cy="30%" r="80%">
+                  <stop offset="0%"  stop-color="#ffd9e4" />
+                  <stop offset="42%" stop-color="#ff6f97" />
+                  <stop offset="82%" stop-color="#d81e57" />
+                  <stop offset="100%" stop-color="#9d0f3e" />
+                </radialGradient>
+                <linearGradient id="hsheen" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"  stop-color="rgba(255,255,255,.85)" />
+                  <stop offset="34%" stop-color="rgba(255,255,255,0)" />
+                </linearGradient>
+              </defs>
+              <path d="M50 86.5C26 68 10.5 53.6 10.5 34.6 10.5 20.4 21 11 33.2 11c8.6 0 14.2 4.7 16.8 11.4C52.6 15.7 58.2 11 66.8 11 79 11 89.5 20.4 89.5 34.6 89.5 53.6 74 68 50 86.5Z" fill="url(#hg)" />
+              <path d="M50 86.5C26 68 10.5 53.6 10.5 34.6 10.5 20.4 21 11 33.2 11c8.6 0 14.2 4.7 16.8 11.4C52.6 15.7 58.2 11 66.8 11 79 11 89.5 20.4 89.5 34.6 89.5 53.6 74 68 50 86.5Z" fill="url(#hsheen)" opacity=".7" />
+              <ellipse cx="34" cy="30" rx="8.5" ry="5.4" fill="#fff" opacity=".72" style="mix-blend-mode:screen" />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- THE BOW + ARROW — draw the string back, release to fire. The rig is
+           placed lower-left and rotated by JS to aim at the heart, so the shot
+           travels on a diagonal. A real control: role=button + keyboard drag. -->
+      <div class="archery" id="archery" role="button" tabindex="0"
+           aria-label="Draw the bow and release to send the arrow to the heart">
+
+          <!-- aim line, inside the rig so it points straight at the heart -->
+          <div class="aim" id="aim" aria-hidden="true"></div>
+
+          <!-- realistic recurve bow: wooden limbs, leather grip, a live string -->
+          <svg class="bow" id="bow" viewBox="0 0 460 300" aria-hidden="true">
+            <defs>
+              <linearGradient id="limb" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0"   stop-color="#4a2a1a" />
+                <stop offset=".18" stop-color="#6b3f24" />
+                <stop offset=".5"  stop-color="#8a5127" />
+                <stop offset=".82" stop-color="#6b3f24" />
+                <stop offset="1"   stop-color="#4a2a1a" />
+              </linearGradient>
+              <linearGradient id="limbHi" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(255,214,160,.8)" />
+                <stop offset="1" stop-color="rgba(255,214,160,0)" />
+              </linearGradient>
+              <linearGradient id="grip" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#2a1a10" />
+                <stop offset=".5" stop-color="#5a3822" />
+                <stop offset="1" stop-color="#2a1a10" />
+              </linearGradient>
+            </defs>
+            <!-- limb body (taper faked with two stacked strokes) -->
+            <path class="bow__limb" d="M34 96 C 118 168, 168 240, 230 252 C 292 240, 342 168, 426 96"
+                  fill="none" stroke="url(#limb)" stroke-width="13" stroke-linecap="round" />
+            <path class="bow__limbHi" d="M34 96 C 118 168, 168 240, 230 252 C 292 240, 342 168, 426 96"
+                  fill="none" stroke="url(#limbHi)" stroke-width="3" stroke-linecap="round" opacity=".7" />
+            <!-- recurve tip hooks -->
+            <path d="M34 96 C 22 82, 26 70, 40 66" fill="none" stroke="url(#limb)" stroke-width="8" stroke-linecap="round" />
+            <path d="M426 96 C 438 82, 434 70, 420 66" fill="none" stroke="url(#limb)" stroke-width="8" stroke-linecap="round" />
+            <!-- leather grip over the belly -->
+            <rect x="216" y="206" width="28" height="70" rx="9" fill="url(#grip)" />
+            <path d="M219 220h22 M219 236h22 M219 252h22" stroke="rgba(0,0,0,.35)" stroke-width="2" />
+            <!-- the string: two segments meeting at the nock (JS animates the nock).
+                 A warm taupe so the taut string actually reads against the cream. -->
+            <line class="bow__str" id="strL" x1="40" y1="70" x2="230" y2="96" stroke="#9a8068" stroke-width="2.2" stroke-linecap="round" />
+            <line class="bow__str" id="strR" x1="420" y1="70" x2="230" y2="96" stroke="#9a8068" stroke-width="2.2" stroke-linecap="round" />
+            <circle class="bow__serving" id="serving" cx="230" cy="96" r="4.5" fill="#6f5137" />
+          </svg>
+
+          <!-- the arrow: winged golden heart tip (Cupid), gold feather fletching -->
+          <svg class="arrow" id="arrow" viewBox="0 0 64 220" aria-hidden="true">
+            <defs>
+              <linearGradient id="shaft" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#4a2c14" />
+                <stop offset=".5" stop-color="#8a5a2c" />
+                <stop offset="1" stop-color="#3e2410" />
+              </linearGradient>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffe38c" />
+                <stop offset=".45" stop-color="#f4a626" />
+                <stop offset="1" stop-color="#a85f0e" />
+              </linearGradient>
+              <linearGradient id="feath" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff7f9c" />
+                <stop offset=".5" stop-color="#e6396a" />
+                <stop offset="1" stop-color="#a8154a" />
+              </linearGradient>
+              <linearGradient id="wing" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff" />
+                <stop offset="1" stop-color="#ffe0c4" />
+              </linearGradient>
+            </defs>
+
+            <!-- shaft (dark wood so it reads against the cream) -->
+            <rect x="29.4" y="30" width="5.2" height="168" rx="2.6" fill="url(#shaft)" />
+
+            <!-- angel wings flanking the heart tip -->
+            <g class="arrow__wings">
+              <path class="wingL" d="M31 30 C 10 16, 2 20, 4 34 C 12 30, 20 32, 31 40 Z" fill="url(#wing)" stroke="rgba(196,132,58,.72)" stroke-width="1.2"/>
+              <path class="wingR" d="M33 30 C 54 16, 62 20, 60 34 C 52 30, 44 32, 33 40 Z" fill="url(#wing)" stroke="rgba(196,132,58,.72)" stroke-width="1.2"/>
+            </g>
+
+            <!-- golden heart arrowhead (Cupid's love arrow) -->
+            <path class="arrow__head" d="M32 12 C 30 7, 22 6.5, 21.5 13 C 21 18, 27 22, 32 27 C 37 22, 43 18, 42.5 13 C 42 6.5, 34 7, 32 12 Z" fill="url(#gold)" stroke="#a5701a" stroke-width=".8" />
+            <ellipse cx="27" cy="13" rx="2.6" ry="1.7" fill="#fff" opacity=".8" style="mix-blend-mode:screen" />
+
+            <!-- gold feather fletching -->
+            <g class="arrow__fletch">
+              <path d="M32 150 C 16 156, 10 178, 15 200 C 24 194, 30 184, 32 176 Z" fill="url(#feath)" />
+              <path d="M32 150 C 48 156, 54 178, 49 200 C 40 194, 34 184, 32 176 Z" fill="url(#feath)" opacity=".92" />
+              <path d="M28 160l4 3 M26 170l6 3 M25 180l7 3" stroke="rgba(130,12,48,.45)" stroke-width="1" />
+              <path d="M36 160l-4 3 M38 170l-6 3 M39 180l-7 3" stroke="rgba(130,12,48,.45)" stroke-width="1" />
+            </g>
+            <!-- nock -->
+            <path d="M29 200 L32 205 L35 200" fill="none" stroke="#c9a25a" stroke-width="2" stroke-linecap="round"/>
+            <!-- invisible tip marker: JS measures it to land the head on the heart -->
+            <circle id="tip" cx="32" cy="9" r="0.6" fill="none" />
+          </svg>
+      </div>
+
+      <p class="hero__hint" id="hint">PULL &amp; RELEASE</p>
+    </section>
+
+    <!-- ACT 2 — THE FLOOD -----------------------------------------------------
+         The heart bursts into this circle at its landing point, and it swallows
+         the frame in rose. Same trick as the intro dot: no cross-fade anywhere,
+         the colour just arrives. -->
+    <div class="flood" id="flood" aria-hidden="true"></div>
+
+    <!-- ACT 3 — THE WISH (kinetic type on the flood) --------------------------
+         Lives inside the flood's own colour, revealed by it. Every glyph hinges
+         up out of its mask — nothing fades. -->
+    <div class="field" id="field" aria-hidden="true">
+      <div class="blob blob--1"></div>
+      <div class="blob blob--2"></div>
+      <div class="blob blob--3"></div>
+      <div class="fgrid" id="fgrid"></div>
+      <div class="fvignette"></div>
+
+      <div class="camera" id="camera">
+        <p class="kEyebrow" id="kEyebrow">A little love, just for you…</p>
+        <h2 class="headline" id="headline">
+          <span class="hl__line"><span class="mask"><span class="hl__word" id="wLine1">Happy</span></span></span>
+          <span class="hl__line"><span class="mask"><span class="hl__word" id="wLine2">Birthday, Amma</span></span></span>
+        </h2>
+        <svg class="uline" id="uline" viewBox="0 0 300 26" fill="none" aria-hidden="true">
+          <path class="uline__path" d="M8 16C56 7 132 4 178 6c30 1 78 5 114 12-40 3-108 4-176 3"
+                stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p class="kSub" id="kSub">To the one who made my world feel like home.</p>
+        <div class="kFinal" id="kFinal" aria-live="polite">
+          <p>You r my Yashoda.</p>
+          <p>I am your kanha.</p>
+        </div>
+      </div>
+
+      <div class="bar bar--top" id="barTop"></div>
+      <div class="bar bar--bot" id="barBot"></div>
+    </div>
+
+    <!-- The gold light that bridges the rose wish into the dawn of the tree. -->
+    <div class="bloom" id="bloom" aria-hidden="true"></div>
+
+    <!-- ACT 4 — THE HAND-LETTERED WISH (over the tree) ------------------------ -->
+    <div class="wish" id="wish" aria-hidden="true">
+      <div class="wish__content">
+        <section class="wish__stage wish__stage--greeting" data-wish-stage="greeting" aria-hidden="true">
+          <p class="wish__eyebrow">For my Amma, with all my love…</p>
+          <div class="wish__heroWrap"><h1 class="wish__hero">Happy Birthday, Amma ❤️</h1></div>
+          <span class="wish__rule"></span>
+        </section>
+        <section class="wish__stage" data-wish-stage="meaning" aria-hidden="true">
+          <p>Some people make life beautiful.</p>
+          <p>You made mine more meaningful.</p>
+        </section>
+        <section class="wish__stage" data-wish-stage="always" aria-hidden="true">
+          <p>No matter how much life changes,</p>
+          <p>you'll always be my Amma.</p>
+        </section>
+        <section class="wish__stage wish__stage--personal" data-wish-stage="personal" aria-hidden="true">
+          <p>One more year of loving you,</p>
+          <p>annoying you,</p>
+          <p>making memories with you,</p>
+          <p>and being your kanha.</p>
+        </section>
+        <section class="wish__stage wish__stage--final" data-wish-stage="final" aria-hidden="true">
+          <p>Forever your maga. ❤️</p>
+        </section>
+      </div>
+    </div>
+
+    <!-- PHASE 2 — separate cake and balloon scenes above the tree. -->
+    <section class="phase-two" id="phaseTwo" aria-label="Birthday wishes" aria-hidden="true" inert>
+      <div class="p2-atmosphere" aria-hidden="true">
+        <i class="p2-star p2-star--1"></i><i class="p2-star p2-star--2"></i>
+        <i class="p2-star p2-star--3"></i><i class="p2-star p2-star--4"></i>
+        <i class="p2-star p2-star--5"></i><i class="p2-star p2-star--6"></i>
+        <i class="p2-confetti p2-confetti--1"></i><i class="p2-confetti p2-confetti--2"></i>
+        <i class="p2-confetti p2-confetti--3"></i><i class="p2-confetti p2-confetti--4"></i>
+        <i class="p2-confetti p2-confetti--5"></i><i class="p2-confetti p2-confetti--6"></i>
+      </div>
+
+      <section class="p2-view p2-cake" id="cakeScene" aria-labelledby="cakeTitle">
+        <div class="p2-cake__content">
+          <p class="p2-kicker" id="cakeTitle">First things first 🎂</p>
+          <p class="p2-subtitle">Baking something sweet...</p>
+
+          <div class="cake-art" id="cakeArt" aria-label="A pink birthday cake with white icing and one candle" role="img">
+            <div class="cake-art__glow" aria-hidden="true"></div>
+            <div class="cake-art__candle" aria-hidden="true">
+              <span class="cake-art__flame" id="candleFlame"></span>
+              <span class="cake-art__wick"></span>
+              <span class="cake-art__stick"></span>
+            </div>
+            <div class="cake-art__top"></div>
+            <div class="cake-art__icing"></div>
+            <div class="cake-art__middle"></div>
+            <div class="cake-art__base"></div>
+            <div class="cake-art__stand"></div>
+          </div>
+
+          <div class="p2-wish" id="wishPrompt" aria-live="polite" hidden>
+            <h2>Happy Birthday, Vidyamma!</h2>
+            <p>Make a wish</p>
+            <button class="wish-button" id="makeWish" type="button">
+              <span>Make a Wish</span><span aria-hidden="true">✦</span>
+            </button>
+          </div>
+
+          <div class="p2-continue" id="wishContinue" hidden>
+            <p>Made your wish? There's a little more birthday magic waiting for you… ✨</p>
+            <button class="continue-button" id="continueToBalloons" type="button">Continue ✨</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="p2-view p2-balloons" id="balloonsScene" aria-labelledby="balloonTitle" hidden>
+        <header class="balloon-intro">
+          <h2 id="balloonTitle">Pop the balloons 🎈</h2>
+          <p>5 balloons. Each one holds a reason you're loved. Pop them all 🎈</p>
+          <p class="balloon-progress" id="balloonProgress" aria-live="polite">0 of 5 reasons revealed</p>
+        </header>
+        <div class="balloon-grid" id="balloonGrid" aria-label="Five balloons to pop"></div>
+        <div class="reason-list" id="reasonList" aria-live="polite" aria-label="Revealed reasons"></div>
+        <div class="p2-finale" id="phaseTwoFinale" hidden>
+          <button class="phase-three-entry" id="openStory" type="button" hidden>Continue to Our Story →</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- PHASE 3 — the personal story, entered only after all five reasons. -->
+    <section class="phase-three" id="phaseThree" aria-label="A story for Ammaaa" aria-hidden="true" inert hidden>
+      <div class="story-frame" id="storyFrame" data-theme="letter">
+        <header class="story-header">
+          <p class="story-kicker" id="storyProgress"></p>
+          <h2 class="story-title" id="storyTitle" tabindex="-1"></h2>
+        </header>
+        <div class="story-scroll" id="storyScroll" tabindex="0" aria-label="Story text"></div>
+        <footer class="story-controls">
+          <button class="story-continue" id="storyContinue" type="button"></button>
+          <p class="sr-only" id="storyStatus" aria-live="polite"></p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- PHASE 4 — the actual photographs and keepsakes from Locker. -->
+    <section class="phase-four" id="phaseFour" aria-label="Our memories" aria-hidden="true" inert hidden>
+      <div class="photo-journey" id="photoJourney">
+        <header class="photo-topline">
+          <p>THE PHOTOGRAPHS · FOR AMMAAA</p>
+          <span aria-hidden="true">✦</span>
+        </header>
+
+        <section class="photo-index" id="photoIndex" aria-labelledby="photoJourneyTitle">
+          <div class="photo-index__heading">
+            <p class="photo-eyebrow">AFTER THE WORDS, THE MOMENTS</p>
+            <h2 id="photoJourneyTitle" tabindex="-1">Our Memories <span aria-hidden="true">♥</span></h2>
+            <p class="photo-intro">Some memories are written in words. Some are kept in photographs.</p>
+          </div>
+          <button class="photo-feature" id="photoFeature" type="button" aria-label="Open our first photograph together">
+            <img id="photoFeatureImage" alt="" />
+            <span class="photo-feature__shade" aria-hidden="true"></span>
+            <span class="photo-feature__caption"><small>OUR FIRST CHAPTER</small><strong>Moments Together <span aria-hidden="true">→</span></strong></span>
+          </button>
+          <div class="photo-collections" id="photoCollections" aria-label="Photo collections"></div>
+          <p class="photo-index__note">Take your time. Every photograph is here to be opened.</p>
+          <button class="p5-entry" id="photoIndexContinue" type="button">Continue to your final surprise <span aria-hidden="true">→</span></button>
+        </section>
+
+        <section class="photo-gallery" id="photoGallery" aria-labelledby="photoGalleryTitle" hidden>
+          <div class="photo-gallery__head">
+            <button class="photo-back" id="photoBack" type="button">← <span>All collections</span></button>
+            <p class="photo-eyebrow" id="photoGalleryEyebrow"></p>
+            <h2 id="photoGalleryTitle" tabindex="-1"></h2>
+            <p class="photo-gallery__intro" id="photoGalleryIntro"></p>
+            <p class="photo-count" id="photoCount" aria-live="polite"></p>
+          </div>
+          <div class="photo-grid" id="photoGrid"></div>
+          <nav class="photo-sequence" id="photoSequence" aria-label="Move between photo collections"></nav>
+          <div class="photo-gallery__end"><button class="photo-back photo-back--bottom" id="photoBackBottom" type="button">← All collections</button><button class="p5-entry" id="photoGalleryContinue" type="button">Continue to your final surprise <span aria-hidden="true">→</span></button></div>
+        </section>
+      </div>
+
+      <dialog class="photo-viewer" id="photoViewer" aria-label="Photograph viewer">
+        <div class="photo-viewer__shell">
+          <button class="photo-viewer__close" id="photoViewerClose" type="button" aria-label="Close photograph viewer">×</button>
+          <button class="photo-viewer__step photo-viewer__step--prev" id="photoViewerPrev" type="button" aria-label="Previous photograph">‹</button>
+          <figure class="photo-viewer__figure">
+            <img id="photoViewerImage" alt="" />
+            <figcaption id="photoViewerCaption" hidden></figcaption>
+          </figure>
+          <button class="photo-viewer__step photo-viewer__step--next" id="photoViewerNext" type="button" aria-label="Next photograph">›</button>
+          <p class="photo-viewer__position" id="photoViewerPosition" aria-live="polite"></p>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- PHASE 5 — the birthday wish video and final gift. -->
+    <section class="phase-five" id="phaseFive" aria-label="Your final surprise" aria-hidden="true" inert hidden>
+      <div class="p5-shell">
+        <section class="p5-screen p5-video-screen" data-p5-screen="video" aria-labelledby="p5VideoTitle">
+          <div class="p5-card p5-voice-card">
+            <p class="p5-eyebrow">A LITTLE BIRTHDAY SURPRISE</p>
+            <h2 id="p5VideoTitle">A little birthday surprise for my Ammaaa… 🎁❤️</h2>
+            <div class="p5-video-intro">
+              <p>This birthday, I have two special gifts for you. The first one is a little world filled with our memories, made with all my love. But the second one… 🤭</p>
+              <p>Well, you'll have to reach the very end to discover that one!</p>
+            </div>
+            <div class="p5-video-wrap">
+              <video id="p5BirthdayVideo" controls playsinline preload="metadata" aria-label="Ashish's birthday wish video">
+                <source src="%BASE_URL%video/amma-birthday-wish.mp4" type="video/mp4" />
+                Your browser cannot play this birthday video.
+              </video>
+            </div>
+            <p class="p5-player-status" id="p5VideoStatus" role="status">Preparing your birthday wish…</p>
+            <button class="p5-button p5-button--continue" id="p5Continue" type="button" hidden>Continue ❤️</button>
+            <button class="p5-button p5-button--continue" id="p5RetryVideo" type="button" hidden>Retry birthday video ↻</button>
+            <button class="p5-dev-bypass" id="p5DevBypass" type="button" hidden>Development preview: continue without video</button>
+          </div>
+        </section>
+
+        <section class="p5-screen p5-question" data-p5-screen="question" aria-labelledby="p5QuestionTitle" hidden>
+          <div class="p5-card">
+            <p class="p5-eyebrow">ONE LAST THING</p>
+            <h2 id="p5QuestionTitle">Ammaaa… one last thing! 🤭❤️</h2>
+            <p class="p5-question-prompt">Are you ready to see the best gift of the year? 🎁✨</p>
+            <p class="p5-no-response" id="p5NoResponse" aria-live="polite"></p>
+            <div class="p5-actions"><button class="p5-button p5-button--yes" id="p5Yes" type="button">YES ❤️</button><button class="p5-button p5-button--no" id="p5No" type="button">NO 🙈</button></div>
+          </div>
+        </section>
+
+        <section class="p5-screen p5-message" data-p5-screen="message" aria-labelledby="p5MessageTitle" hidden>
+          <div class="p5-card p5-reading-card"><p class="p5-eyebrow" id="p5MessageKicker">A LITTLE SOMETHING TO REMEMBER</p><h2 class="sr-only" id="p5MessageTitle">Before your last gift</h2><p class="p5-message-text" id="p5MessageText"></p><p class="p5-counter" id="p5MessageCounter"></p><button class="p5-button p5-button--continue" id="p5MessageContinue" type="button">Continue →</button></div>
+        </section>
+
+        <section class="p5-screen p5-reveal" data-p5-screen="reveal" aria-labelledby="p5RevealTitle" hidden>
+          <div class="p5-card p5-reading-card"><p class="p5-eyebrow">THE SECOND GIFT</p><h2 id="p5RevealTitle">Your Most Precious Gift ❤️</h2><p class="p5-message-text" id="p5RevealText"></p><figure class="p5-reveal-photo" id="p5RevealPhoto" hidden><img id="p5RevealImage" alt="Ashish, Amma's Maga" /><figcaption>YOUR MAGA</figcaption></figure><p class="p5-counter" id="p5RevealCounter"></p><button class="p5-button p5-button--continue" id="p5RevealContinue" type="button">Continue →</button></div>
+        </section>
+
+        <section class="p5-screen p5-photos" data-p5-screen="photos" aria-labelledby="p5PhotosTitle" hidden>
+          <div class="p5-photo-frame"><p class="p5-eyebrow">JUST YOUR MAGA</p><h2 class="sr-only" id="p5PhotosTitle">A few photographs of your Maga</h2><figure><img id="p5Photo" alt="A photograph of Ashish" /><figcaption id="p5PhotoCount"></figcaption></figure><button class="p5-button p5-button--continue" id="p5PhotoContinue" type="button">Continue →</button></div>
+        </section>
+
+        <section class="p5-screen p5-ending" data-p5-screen="ending" aria-labelledby="p5EndingTitle" hidden>
+          <div class="p5-ending-card"><span class="p5-ending-heart" aria-hidden="true">♡</span><h2 id="p5EndingTitle">One year of memories, a lifetime of love… forever your Maga. ❤️</h2><p>— Your Maga, always. ❤️</p><button class="p5-button p5-button--continue" id="p5FinalVideoContinue" type="button">One last little film →</button></div>
+        </section>
+
+        <section class="p5-screen p5-final-video" data-p5-screen="final-video" aria-labelledby="p5FinalVideoTitle" hidden>
+          <div class="p5-card p5-final-video-card">
+            <p class="p5-eyebrow">A LITTLE FILM TO KEEP</p>
+            <h2 id="p5FinalVideoTitle">One more memory, Amma ❤️</h2>
+            <div class="p5-video-wrap">
+              <video id="p5FinalVideo" controls playsinline preload="metadata" aria-label="A final birthday film for Amma">
+                <source src="%BASE_URL%video/final-birthday-video.mp4" type="video/mp4" />
+                Your browser cannot play this birthday film.
+              </video>
+            </div>
+            <p class="p5-player-status" id="p5FinalVideoStatus" role="status" aria-live="polite">Your final birthday film is ready. ❤️</p>
+            <button class="p5-button p5-button--continue" id="p5FinalVideoRetry" type="button" hidden>Retry birthday film ↻</button>
+          </div>
+        </section>
+
+        <section class="p5-screen p5-closing" data-p5-screen="closing" aria-labelledby="p5ClosingTitle" hidden>
+          <article class="p5-closing-card">
+            <p class="p5-closing-line">A year filled with beautiful memories… ❤️</p>
+            <p class="p5-closing-line">A birthday made special with all the love in my heart.</p>
+            <p class="p5-closing-line">And this is only the beginning…</p>
+            <p class="p5-closing-line">Because our memories will never end. 💕</p>
+            <p class="p5-closing-verse">With every passing year,<br>we'll make new memories,<br>capture new moments,<br>and create more reasons to smile.</p>
+            <h2 class="p5-closing-conclusion" id="p5ClosingTitle"><span>One birthday, one more chapter,</span><span>a lifetime of memories with you, Amma.</span> ♾️❤️</h2>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <!-- One lens over the whole film: vignette + fine grain. -->
+    <div class="grade" aria-hidden="true">
+      <div class="grade__vignette"></div>
+      <div class="grade__grain"></div>
+    </div>
+  </main>
+
+  <!-- Accessible equivalent for reduced-motion + screen readers. -->
+  <p class="sr-only">Happy Birthday. Here&rsquo;s to a wonderful year ahead.</p>
+
+  <script type="module" src="./birthday.js"></script>
+</body>
+</html>
